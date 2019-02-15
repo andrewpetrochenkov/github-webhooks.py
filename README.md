@@ -19,16 +19,29 @@ $ export GITHUB_TOKEN="xxx"
 function|`__doc__`
 -|-
 `github_webhooks.create(fullname, url, events=['push'])`|create repo webhook
-`github_webhooks.delete(fullname)`|delete all repo webhooks
+`github_webhooks.delete(fullname, webhooks)`|delete repo webhooks by name or url
 `github_webhooks.get(fullname)`|return list of repo webhooks data
+`github_webhooks.names(fullname)`|return list of webhooks names
 `github_webhooks.urls(fullname)`|return list of repo webhooks urls
 
 #### CLI
 usage|`__doc__`
 -|-
 `python -m github_webhooks.create url ...`|create repo webhook(s)
-`python -m github_webhooks.delete`|delete all repo webhooks
+`python -m github_webhooks.delete webhook ...`|delete all repo webhooks
+`python -m github_webhooks.names`|print repo webhooks names
 `python -m github_webhooks.urls`|print repo webhooks urls
+
+#### Examples
+```bash
+$ cd path/to/repo
+$ python -m github_webhooks.create https://xxx.execute-api.us-east-1.amazonaws.com/run
+$ python -m github_webhooks.names
+web
+$ python -m github_webhooks.urls
+https://xxx.execute-api.us-east-1.amazonaws.com/run
+$ python -m github_webhooks.delete "web"
+```
 
 #### Links
 +   [webhooks REST API v3](https://developer.github.com/v3/repos/hooks/)

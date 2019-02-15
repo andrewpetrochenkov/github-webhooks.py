@@ -8,6 +8,7 @@ import requests
 https://developer.github.com/webhooks/
 """
 
+
 def request(method, url, data=None, **kwargs):
     """make request and return response"""
     token = os.environ["GITHUB_TOKEN"]
@@ -26,6 +27,12 @@ def get(fullname):
     """return list of repo webhooks data"""
     api_url = "https://api.github.com/repos/%s/hooks" % fullname
     return request("GET", api_url).json()
+
+
+@public.add
+def names(fullname):
+    """return list of webhooks names"""
+    return list(map(lambda h: h["name"], get(fullname)))
 
 
 @public.add
@@ -48,6 +55,7 @@ def urls(fullname):
         result.append(url)
     return result
 
+
 def hook_id(url):
     for hook in get():
         if hook["config"]["url"] == url:
@@ -55,10 +63,13 @@ def hook_id(url):
 
 
 @public.add
-def delete(fullname):
-    """delete all repo webhooks"""
-    for hook in get(fullname):
+def delete(fullname, webhooks):
+    """delete repo webhooks by name or url"""
+    data = get(fullname)
+    for hook in data:
         hook_id = hook["id"]
+        name = hook["name"]
+        url = hook["config"]["url"]
         api_url = "https://api.github.com/repos/%s/hooks/%s" % (fullname, hook_id)
-        request("DELETE", api_url)
-
+        if name in webhooks or url in webhooks:
+            request("DELETE", api_url)

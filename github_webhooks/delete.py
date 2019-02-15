@@ -5,14 +5,16 @@ import github_repo
 import github_webhooks
 
 MODULE_NAME = "github_webhooks.delete"
-USAGE = 'python -m %s' % MODULE_NAME
+USAGE = 'python -m %s webhook ...' % MODULE_NAME
 PROG_NAME = 'python -m %s' % USAGE
 
 
 @click.command()
-def _cli():
+@click.argument('webhooks', nargs=-1, required=True)
+def _cli(webhooks):
     fullname = github_repo.fullname()
-    github_webhooks.delete(fullname)
+    for webhook in webhooks:
+        github_webhooks.delete(fullname, webhook)
 
 
 if __name__ == "__main__":
