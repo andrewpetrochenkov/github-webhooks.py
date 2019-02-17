@@ -10,6 +10,7 @@ $ [sudo] pip install github-webhooks
 #### Config
 ```bash
 $ export GITHUB_TOKEN="xxx"
+$ export GITHUB_WEBHOOKS_INI=~/.github-webhooks.ini
 ```
 ```python
 >>> os.environ["GITHUB_TOKEN"] = "xxx"
@@ -18,29 +19,42 @@ $ export GITHUB_TOKEN="xxx"
 #### Functions
 function|`__doc__`
 -|-
-`github_webhooks.create(fullname, url, events=['push'])`|create repo webhook
-`github_webhooks.delete(fullname, webhooks)`|delete repo webhooks by name or url
-`github_webhooks.get(fullname)`|return list of repo webhooks data
-`github_webhooks.names(fullname)`|return list of webhooks names
-`github_webhooks.urls(fullname)`|return list of repo webhooks urls
+`github_webhooks.add(fullname, url, events=['push'])`|add repo webhook
+`github_webhooks.delete(fullname, webhooks)`|delete repo webhooks by id or name or url
+`github_webhooks.init(fullname, sections)`|init webhook from init file sections
+`github_webhooks.api.delete(fullname, hook_id)`|delete repo webhook
+`github_webhooks.api.get(fullname)`|return list of repo webhooks data
+`github_webhooks.api.request(method, url, data=None, **kwargs)`|make request and return response
 
 #### CLI
 usage|`__doc__`
 -|-
-`python -m github_webhooks.create url ...`|create repo webhook(s)
+`python -m github_webhooks.create events url`|create repo webhook(s)
 `python -m github_webhooks.delete webhook ...`|delete all repo webhooks
+`python -m github_webhooks.init section ...`|init webhook from init file sections
 `python -m github_webhooks.names`|print repo webhooks names
 `python -m github_webhooks.urls`|print repo webhooks urls
 
 #### Examples
 ```bash
 $ cd path/to/repo
-$ python -m github_webhooks.create https://xxx.execute-api.us-east-1.amazonaws.com/run
+$ python -m github_webhooks.create "push" https://xxx.execute-api.us-east-1.amazonaws.com/run
 $ python -m github_webhooks.names
 web
 $ python -m github_webhooks.urls
 https://xxx.execute-api.us-east-1.amazonaws.com/run
 $ python -m github_webhooks.delete "web"
+```
+
+`~/.github-webhooks.ini`
+```
+[name]
+  url = https://xxx.execute-api.us-east-1.amazonaws.com/run
+  events = push
+```
+
+```
+$ python -m github_webhooks.init "name"
 ```
 
 #### Links

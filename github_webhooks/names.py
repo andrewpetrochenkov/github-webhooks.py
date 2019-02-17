@@ -10,8 +10,12 @@ PROG_NAME = 'python -m %s' % MODULE_NAME
 
 @click.command()
 def _cli():
+    names = []
     fullname = github_repo.fullname()
-    names = github_webhooks.names(fullname)
+    data = github_webhooks.api.get(fullname)
+    for hook in data:
+        url = hook["config"]["name"]
+        names.append(url)
     if names:
         print("\n".join(names))
 
