@@ -8,6 +8,7 @@ import requests
 https://developer.github.com/v3/repos/hooks/
 """
 
+
 @public.add
 def request(method, url, data=None, **kwargs):
     """make request and return response"""
@@ -24,13 +25,13 @@ def request(method, url, data=None, **kwargs):
 
 @public.add
 def get(fullname):
-    """return list of repo webhooks data"""
-    api_url = "https://api.github.com/repos/%s/hooks" % fullname
-    return request("GET", api_url).json()
+    """return a list of repo webhooks data"""
+    url = "https://api.github.com/repos/%s/hooks" % fullname
+    return request("GET", url).json()
 
 
 @public.add
 def delete(fullname, hook_id):
     """delete repo webhook"""
-    api_url = "https://api.github.com/repos/%s/hooks/%s" % (fullname, hook_id)
-    request("DELETE", api_url)
+    url = "https://api.github.com/repos/%s/hooks/%s" % (fullname, int(hook_id))
+    request("DELETE", url)
