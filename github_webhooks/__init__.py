@@ -1,13 +1,8 @@
 #!/usr/bin/env python
-import ini2dict
 import os
 import public
 import values
 import github_webhooks.api
-
-
-GITHUB_WEBHOOKS_INI = os.path.expanduser("~/.github-webhooks.ini")
-GITHUB_WEBHOOKS_INI = os.getenv("GITHUB_WEBOOKS_INI", GITHUB_WEBHOOKS_INI)
 
 
 @public.add
@@ -47,23 +42,3 @@ def delete(fullname, webhooks):
             url = hook["config"]["url"]
             if webhook == hook_id or webhook == name or webhook == url:
                 github_webhooks.api.delete(fullname, hook_id)
-
-
-@public.add
-def init(fullname, sections):
-    """init webhook from init file sections"""
-    webhooks = ini2dict.read(GITHUB_WEBHOOKS_INI)
-    for section in values.get(sections):
-        url = webhooks[section]["url"]
-        events = webhooks[section].get("events", "push").replace(" ", "").split(",")
-        add(fullname, url, events=events)
-
-"""
-path = "/Users/russianidiot/git/looking-for-a-job/private-dotfiles/dotfiles"
-fullname = "looking-for-a-job/private-dotfiles"
-init(fullname, "push")
-# print(github_webhooks.api.get(fullname))
-#delete(fullname, "web")
-# os.chdir(path)
-# print(github_webhooks.api.get(fullname))
-"""

@@ -1,5 +1,6 @@
 <!--
 https://pypi.org/project/readme-generator/
+https://pypi.org/project/python-readme-generator/
 -->
 
 [![](https://img.shields.io/pypi/pyversions/github-webhooks.svg?longCache=True)](https://pypi.org/project/github-webhooks/)
@@ -24,7 +25,7 @@ function|`__doc__`
 `github_webhooks.api.get(fullname)` |return a list of repo webhooks data
 `github_webhooks.api.request(method, url, data=None, **kwargs)` |make request and return response
 
-#### CLI
+#### Executable modules
 usage|`__doc__`
 -|-
 `python -m github_webhooks.add events url` |add repo webhook(s)
@@ -59,5 +60,5 @@ $ python -m github_webhooks.init "name"
 +   [webhooks REST API v3](https://developer.github.com/v3/repos/hooks/)
 
 <p align="center">
-    <a href="https://pypi.org/project/readme-generator/">readme-generator</a>
+    <a href="https://pypi.org/project/python-readme-generator/">python-readme-generator</a>
 </p>
