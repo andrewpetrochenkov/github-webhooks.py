@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+__all__ = ['add', 'delete', 'exists']
+
+
 import os
-import public
 import values
 import github_webhooks.api
 
 
-@public.add
 def exists(fullname, webhook):
     """return True if webhook exists"""
     for hook in github_webhooks.api.get(fullname):
@@ -16,7 +16,6 @@ def exists(fullname, webhook):
     return False
 
 
-@public.add
 def add(fullname, url, events=["push"]):
     """add repo webhook"""
     if not events:
@@ -31,7 +30,6 @@ def add(fullname, url, events=["push"]):
     return github_webhooks.api.request("POST", api_url, data).json()
 
 
-@public.add
 def delete(fullname, webhooks):
     """delete repo webhooks by id or name or url"""
     data = github_webhooks.api.get(fullname)
