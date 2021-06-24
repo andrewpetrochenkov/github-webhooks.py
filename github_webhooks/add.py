@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """add repo webhook(s)"""
 import click
-import github_repo
+import github_repos
 import github_webhooks
 
 MODULE_NAME = "github_webhooks.add"
@@ -13,7 +13,7 @@ PROG_NAME = 'python -m %s' % MODULE_NAME
 @click.argument('events', required=True)
 @click.argument('url', required=True)
 def _cli(events, url):
-    fullname = github_repo.fullname()
+    fullname = github_repos.fullname()
     events = events.replace(" ", "").split(",")
     data = github_webhooks.add(fullname, events, url)
     print(data)

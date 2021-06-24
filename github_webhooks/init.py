@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """init webhook from init file sections"""
 import click
-import github_repo
+import github_repos
 import github_webhooks
 
 MODULE_NAME = "github_webhooks.init"
@@ -12,7 +12,7 @@ PROG_NAME = 'python -m %s' % USAGE
 @click.command()
 @click.argument('sections', nargs=-1, required=True)
 def _cli(sections):
-    fullname = github_repo.fullname()
+    fullname = github_repos.fullname()
     github_webhooks.init(fullname, sections)
 
 

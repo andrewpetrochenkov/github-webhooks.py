@@ -1,5 +1,4 @@
 click
-github-repo
-github-webhooks
+github-repos
 requests
 values
